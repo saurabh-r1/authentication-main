@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
@@ -10,6 +10,13 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 function App() {
   const authCtx = useContext(AuthContext);
+  useEffect(() => {
+    // Check if the token is expired when the app loads
+    if (authCtx.isLoggedIn && !authCtx.token) {
+      alert("Your session has expired. Please log in again.");
+      authCtx.logout();
+    }
+  }, [authCtx]);
 
   return (
     <Layout>

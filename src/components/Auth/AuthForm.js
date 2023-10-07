@@ -62,14 +62,16 @@ const AuthForm = () => {
       }
     })
     .then((data) => {
-      authCtx.login(data.idToken);
+      // Calculate the token expiration time (5 minutes from now)
+      
+      const expirationTime = new Date(new Date().getTime() + 5 * 60 * 1000); // 5 minutes
+      authCtx.login(data.idToken, expirationTime); // Pass the token and expiration time
       history.replace('/');
     })
     .catch((err) => {
       alert(err.message);
     });
 };
-
 
   return (
     <section className={classes.auth}>
